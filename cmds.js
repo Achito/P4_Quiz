@@ -145,7 +145,7 @@ exports.testCmd = (socket, rl,id) => {
 };
 
 
-exports.playCmd = (socket, rl) => {
+exports.playCmd = (socket,rl) => {
     let score = 0;
     let toBeResolved = [];
     
@@ -153,7 +153,7 @@ exports.playCmd = (socket, rl) => {
         return new Promise((resolve,reject) => {
             
             if(toBeResolved.length <=0){
-                log(socket, "No hay nada más que preguntar. Aciertos:");
+                log(socket,"No hay nada mas que preguntar. Aciertos:");
                 resolve();
                 return;
             }
@@ -161,14 +161,14 @@ exports.playCmd = (socket, rl) => {
             let quiz = toBeResolved[pos];
             toBeResolved.splice(pos,1);
             
-            makeQuestion(rl, quiz.question+'? ')
+            makeQuestion(rl, quiz.question +'? ')
             .then(answer => {
                 if(answer.toLowerCase().trim() === quiz.answer.toLowerCase().trim()){
                     score++;
-                    log(socket, "CORRECTO: ",score, "aciertos en total");
+                    log(socket, 'CORECTO: ' +score+ ' aciertos', 'blue');
                     resolve(playOne());
                 } else {
-                    log(socket, "INCORRECTO. FIN DEL JUEGO. Total aciertos:");
+                    log(socket,"INCORRECTO. FIN Aciertos:");
                     resolve();
                 }   
             })
@@ -183,10 +183,10 @@ exports.playCmd = (socket, rl) => {
         return playOne();
     })
     .catch(error => {
-        log(socket, error);
+        log(socket,error);
     })
     .then(() => {
-        biglog(socket, score,'magenta');
+        biglog(socket,score,'magenta');
         rl.prompt();
     })
 };
